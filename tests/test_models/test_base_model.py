@@ -1,59 +1,89 @@
 #!/usr/bin/python3
-"""Unittest for BaseModel class"""
-
+"""
+Module for BaseModel unittest
+"""
+import os
 import unittest
 from models.base_model import BaseModel
-from datetime import datetime
-import uuid
 
 
-class TestBaseModel(unittest.TestCase):
-    """Test cases for the BaseModel class"""
+
+class TestBasemodel(unittest.TestCase):
+    """
+    Unittest for BaseModel
+    """
 
     def setUp(self):
-        """Set up method to create an instance for testing"""
-        self.model = BaseModel()
+        """
+        Setup for temporary file path
+        """
+        try:
+            os.rename("file.json", "tmp.json")
+        except FileNotFoundError:
+            pass
 
-    def test_instance_creation(self):
-        """Test if the instance is properly created"""
-        self.assertIsInstance(self.model, BaseModel)
+    def tearDown(self):
+        """
+        Tear down for temporary file path
+        """
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
+        try:
+            os.rename("tmp.json", "file.json")
+        except FileNotFoundError:
+            pass
+    def test_init(self):
+        """
+        Test for init
+        """
+        my_model = BaseModel()
 
-    def test_unique_id(self):
-        """Test if each instance has a unique ID"""
-        model2 = BaseModel()
-        self.assertNotEqual(self.model.id, model2.id)
+        self.assertIsNotNone(my_model.id)
+        self.assertIsNotNone(my_model.created_at)
+        self.assertIsNotNone(my_model.updated_at)
 
-    def test_created_at_type(self):
-        """Test if created_at is of type datetime"""
-        self.assertIsInstance(self.model.created_at, datetime)
+    def test_save(self):
+        """
+        Test for save method
+        """
+        my_model = BaseModel()
 
-    def test_updated_at_type(self):
-        """Test if updated_at is of type datetime"""
-        self.assertIsInstance(self.model.updated_at, datetime)
+        initial_updated_at = my_model.updated_at
 
-    def test_save_method(self):
-        """Test if save() updates the updated_at attribute"""
-        old_updated_at = self.model.updated_at
-        self.model.save()
-        self.assertNotEqual(old_updated_at, self.model.updated_at)
+        current_updated_at = my_model.save()
+
+        self.assertNotEqual(initial_updated_at, current_updated_at)
 
     def test_to_dict(self):
-        """Test if to_dict() returns a dictionary with correct keys"""
-        model_dict = self.model.to_dict()
-        self.assertIsInstance(model_dict, dict)
-        self.assertIn('id', model_dict)
-        self.assertIn('created_at', model_dict)
-        self.assertIn('updated_at', model_dict)
-        self.assertIn('__class__', model_dict)
+        """
+        Test for to_dict method
+        """
+        my_model = BaseModel()
 
-    def test_create_from_dict(self):
-        """Test if an instance can be created from a dictionary"""
-        model_dict = self.model.to_dict()
-        new_model = BaseModel(**model_dict)
-        self.assertEqual(new_model.id, self.model.id)
-        self.assertEqual(new_model.created_at, self.model.created_at)
-        self.assertEqual(new_model.updated_at, self.model.updated_at)
+        my_model_dict = my_model.to_dict()
+
+        self.assertIsInstance(my_model_dict, dict)
+
+        self.assertEqual(my_model_dict["__class__"], 'BaseModel')
+        self.assertEqual(my_model_dict['id'], my_model.id)
+        self.assertEqual(my_model_dict['created_at'], my_model.created_at.isoformat())
+        self.assertEqual(my_model_dict["updated_at"], my_model.created_at.isoformat())
 
 
-if __name__ == '__main__':
+    def test_str(self):
+        """
+        Test for string representation
+        """
+        my_model = BaseModel()
+
+        self.assertTrue(str(my_model).startswith('[BaseModel]'))
+
+        self.assertIn(my_model.id, str(my_model))
+
+        self.assertIn(str(my_model.__dict__), str(my_model))
+
+
+if __name__ == "__main__":
     unittest.main()

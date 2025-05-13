@@ -1,8 +1,8 @@
-# AirBnB Clone - Command Interpreter
+# AirBnB Clone - Console
 
 ## Description
 
-This project is a command-line interface (CLI) application that serves as the first step in creating a full AirBnB clone. The CLI acts as a console where users can manage various objects (like users, places, amenities, and more) in a persistent storage system.
+This is a command-line app for managing an Airbnb-style platform. It lets you create, view, update, and delete different objects (like users, places, and amenities) and saves them in a file.
 
 ## Features
 
@@ -31,23 +31,7 @@ This project is a command-line interface (CLI) application that serves as the fi
 (hbnb) update User 1234-1234-1234 name "John"
 ```
 
-## Project Structure
-
-```
-alu-AirBnB_clone/
-├── console.py
-├── models/
-│   ├── __init__.py
-│   ├── base_model.py
-│   └── engine/
-│       └── file_storage.py
-└── tests/
-    └── test_models/
-        ├── test_base_model.py
-        └── test_engine/
-            └── test_file_storage.py
-```
 
 ## Author
 
-* Atete Mpeta Shina
+Atete Mpeta Shina
