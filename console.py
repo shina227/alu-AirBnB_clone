@@ -63,12 +63,13 @@ class HBNBCommand(cmd.Cmd):
         """
         Do nothing when an empty line is entered.
         """
-        pass
+        return False
 
     def do_EOF(self, arg):
         """
         EOF (Ctrl+D) signal to exit the program.
         """
+        print()
         return True
 
     def do_quit(self, arg):
