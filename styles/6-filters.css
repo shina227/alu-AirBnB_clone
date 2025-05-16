@@ -1,0 +1,50 @@
+/* Filter Styles - Dropdown Filters */
+.filters {
+    background-color: #FFFFFF;
+    height: 70px;
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+}
+
+.locations, .amenities {
+    width: 25%;
+    height: 100%;
+    position: relative;
+}
+
+.popover {
+    display: none;
+    position: absolute;
+    top: 70px;
+    background-color: #FAFAFA;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    padding: 10px;
+    list-style: none;
+    width: 150px;
+}
+
+.locations:hover .popover,
+.amenities:hover .popover {
+    display: block;
+}
+
+.popover ul {
+    margin: 0;
+    padding: 0;
+}
+
+.popover li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.popover li:hover {
+    background-color: #eeeeee;
+}
